@@ -1,0 +1,58 @@
+CREATE TABLE `registroCuotas`.`cooperativa`(
+  `id_cooperativa` int NOT NULL AUTO_INCREMENT,
+  `nombre_cooperativa` varchar(75) NOT NULL, 
+  `rut_cooperativa` varchar(10) NOT NULL,
+  PRIMARY KEY(`id_cooperativa`)
+  );
+
+
+
+CREATE TABLE `registroCuotas`.`cuotass`(
+  `id_registro` int NOT NULL AUTO_INCREMENT,
+  `id_cooperativa` int NOT NULL,
+  `nro_comprobante` int NOT NULL,
+  `banco_pago` varchar(40) NOT NULL,
+  `fecha_pago` datetime NOT NULL,
+  `monto_pagado` int NOT NULL,
+  `descripcion_pago` varchar(80) NOT NULL,
+  PRIMARY KEY(`id_registro`),
+  CONSTRAINT `fk` FOREIGN KEY (`id_cooperativa`) 
+  REFERENCES `registroCuotas`.`cooperativa`(`id_cooperativa`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+  );
+
+
+**************************
+
+           <div className="topping">
+              <input 
+                type="checkbox" 
+                id="membresia" 
+                name="pagomembresia" 
+                checked = "false" 
+                value="Pago Membresía"/>
+              Pago Membresía
+            </div>
+            <div className="topping">
+              <input 
+                type="checkbox" 
+                id="mensualidad" 
+                name="pagomensualidad" 
+                checked = "true" 
+                value="Pago Mensualidad"/>
+              Pago Mesualidad
+            </div>
+
+********************************
+
+*********************************
+                <input 
+                  className="inputs" 
+                  type = "text" 
+                  name="descripcion_pago" 
+                  placeholder="Cuéntanos ¿qué estás pagando? "
+                  data-validate="Por Favor ingresa el motivo de tu pago" 
+                  value={descripcion}
+                  onChange={handleChange}/>
+  
