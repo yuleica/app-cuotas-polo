@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import Select from 'react-select';
 
 import "../styles.css";
@@ -8,6 +8,7 @@ import { descripcion } from '../Helper/data_list';
 export const IngresarCuotas = () => {
 
   const [lista, setLista] = useState([]);
+  const [estado, setEstado] = useState(false);
 
   const [cuota, setCuota] = useState(
     {
@@ -21,6 +22,29 @@ export const IngresarCuotas = () => {
   );
 
   
+  const limpiar = ()=>{
+
+    if (estado){
+      setCuota({
+        id_cooperativa: 0,
+        nro_comprobante: 0,
+        banco_pago: " ",
+        fecha_pago: " ",
+        monto_pagado: 0,
+        descripcion_pago: " "
+      })
+    };
+
+    setEstado(false);
+
+  }
+
+
+  useEffect(() => {
+    limpiar()
+  }, [setEstado]);
+  
+ 
   let {comprobante, banco, fecha, monto, id_cooperativa, descripcion_pago} = cuota;
   
   const {data_lista} = descripcion();
@@ -69,9 +93,9 @@ export const IngresarCuotas = () => {
     };
 
     if (!cuota.descripcion_pago || !cuota.fecha_pago) {
-          alert("los campos descripción del pago y fecha de pago son obligatorios")
-          return
-      };
+      alert("los campos descripción del pago y fecha de pago son obligatorios")
+      return
+    };
     
   
     //actualización
@@ -84,8 +108,12 @@ export const IngresarCuotas = () => {
     fetch('http://localhost:9000/api/cuota', requestInit)
     .then(res => res.json() )
     .then( res=> {setCuota(res)
-    console.log(res)} )
+            alert("pago registrado correctamente")
+            setEstado(true)
+          alert(estado)} )
     .catch(error => console.error('Error en el proceso:', error));
+
+    
   };
 
   return (

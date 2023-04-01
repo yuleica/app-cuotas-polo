@@ -5,6 +5,8 @@ import "../styles.css";
 
 export const IngresarCooperativa = () => {
 
+  const [estado, setEstado] = useState(false);
+  
   const [coop, setCoop] = useState(
     {
       nombre_cooperativa: " ",
@@ -42,7 +44,9 @@ export const IngresarCooperativa = () => {
   
     fetch('http://localhost:9000/api/coop', requestInit)
     .then(res => res.json() )
-    .then( res => console.log(res)) 
+    .then( res => { setCoop(res)
+                  alert("miembro del polo registrado correctamente")
+                  setEstado(true) }) 
     .catch(error => console.error('Error en el proceso:', error)); 
   };
    
