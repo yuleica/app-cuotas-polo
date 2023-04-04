@@ -15,7 +15,10 @@ export const Navbar = () => {
                         <Link to='/cuotas'>Ingresar Cuotas</Link>
                     </li>
                     <li>
-                        <Link to='/cooperativas'>Ingresar Cooperativas</Link>
+                        <Link to='/cooperativas'>Ingresar Miembro del Polo</Link>
+                    </li>
+                    <li>
+                        <Link to='/reporteCuotas'>Reporte de Pagos Miembro del Polo</Link>
                     </li>
                 </ul>
             </div>
