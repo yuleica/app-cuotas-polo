@@ -13,6 +13,18 @@ routes.get('/cuota', (req, res) => {
     });
 });
 
+routes.get('/reporteCuotas/:id_cooperativa', (req, res) => {
+    
+    req.getConnection( (err,conn) => {
+        if (err) return res.send(err)
+        
+        conn.query('SELECT * FROM cuotass WHERE id_cooperativa = ?', [req.params.id_cooperativa], (err, rows) => {
+            if (err) return res.send(err)
+            res.json(rows)
+            });
+    });
+});
+
 routes.post('/cuota', (req, res) => {
     
     req.getConnection( (err,conn) => {
