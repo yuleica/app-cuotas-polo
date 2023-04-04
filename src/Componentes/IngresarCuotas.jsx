@@ -22,27 +22,11 @@ export const IngresarCuotas = () => {
   );
 
   
-  const limpiar = ()=>{
-
-    if (estado){
-      setCuota({
-        id_cooperativa: 0,
-        nro_comprobante: 0,
-        banco_pago: " ",
-        fecha_pago: " ",
-        monto_pagado: 0,
-        descripcion_pago: " "
-      })
-    };
-
-    setEstado(false);
-
-  }
-
-
   useEffect(() => {
-    limpiar()
-  }, [setEstado]);
+    if (estado){
+      setEstado(false)
+      formularioCuotas.reset()}; 
+  }, [estado]);
   
  
   let {comprobante, banco, fecha, monto, id_cooperativa, descripcion_pago} = cuota;
@@ -107,13 +91,19 @@ export const IngresarCuotas = () => {
 
     fetch('http://localhost:9000/api/cuota', requestInit)
     .then(res => res.json() )
-    .then( res=> {setCuota(res)
-            alert("pago registrado correctamente")
-            setEstado(true)
-          alert(estado)} )
+    .then( res=> {
+        setCuota(res)
+        alert("pago registrado correctamente")
+        setEstado(true)
+        setCuota({
+          id_cooperativa: 0,
+          nro_comprobante: 0,
+          banco_pago: " ",
+          fecha_pago: " ",
+          monto_pagado: 0,
+          descripcion_pago: " "
+        }) } )
     .catch(error => console.error('Error en el proceso:', error));
-
-    
   };
 
   return (
@@ -128,7 +118,7 @@ export const IngresarCuotas = () => {
           />
           </label>
         </div>
-        <form className="formulario" onSubmit={handleSubmit}>
+        <form className="formulario" id="formularioCuotas" onSubmit={handleSubmit}>
  
             <div className="gridContainer">
               <label>

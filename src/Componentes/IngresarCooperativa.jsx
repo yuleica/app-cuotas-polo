@@ -1,18 +1,24 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import "../styles.css";
 
 export const IngresarCooperativa = () => {
 
   const [estado, setEstado] = useState(false);
-  
   const [coop, setCoop] = useState(
     {
       nombre_cooperativa: " ",
       rut_cooperativa: " "
     }
   );
+
+  useEffect(() => {
+
+    if(estado){
+      setEstado(false)
+      formuliarioCoop.reset()};
+  }, [estado]);
 
   const {nombre, rut} = coop;
 
@@ -35,7 +41,6 @@ export const IngresarCooperativa = () => {
     };
 
     //-------//
-
     const requestInit = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -44,16 +49,23 @@ export const IngresarCooperativa = () => {
   
     fetch('http://localhost:9000/api/coop', requestInit)
     .then(res => res.json() )
-    .then( res => { setCoop(res)
-                  alert("miembro del polo registrado correctamente")
-                  setEstado(true) }) 
+    .then( res => { 
+        setCoop(res)
+        alert("miembro del polo registrado correctamente")
+        setEstado(true) 
+        setCoop({
+          nombre_cooperativa: " ",
+          rut_cooperativa: " "
+        })
+    }) 
     .catch(error => console.error('Error en el proceso:', error)); 
   };
-   
+
+
   return (
     <div className='fondo'>
       <h1>Registro de Cooperativas</h1>
-      <form className="formulario" onSubmit={handleSubmit}>
+      <form className="formulario" onSubmit={handleSubmit} id="formuliarioCoop">
             <div className="gridContainer">
               <label>
                 Nombre del Miembro del Polo: 
