@@ -5,11 +5,12 @@ import csvDownload from 'json-to-csv-export';
 import "../styles.css";
 
 
-
 export const ReporteInfoPagos = () => {
 
   const [lista, setLista] = useState([]);
-  const [datas, setDatas] = useState({});
+  const [dataselected, setDataselected] = useState({});
+
+  let {id_listado, desc_listado} = dataselected;
 
 
  //carga de data
@@ -22,9 +23,8 @@ export const ReporteInfoPagos = () => {
  
   //actualización de estados
   const handleSelectOption = (e) => {
-      console.log(e)
-      const id_listado=(e.value)
-    return id_listado
+    setDataselected({
+      id_listado: e.value});
   };
 
   // // manipulación de data
@@ -32,24 +32,24 @@ export const ReporteInfoPagos = () => {
 
     e.preventDefault();
 
-    //actualización
-    console.log("soy id_listado", id_listado)
-    fetch('http://localhost:9000/api/reporteCuotas/:id_listado', requestInit)
+    //creación de archivo
+    fetch(`http://localhost:9000/api/reporteCuotas/${id_listado}`)
     .then(res => res.json() )
     .then( res=> {
-        setDatas(res)
+      console.log(res)
+        const dataToConvert = {
+          data: res,
+          filename: 'reporte_pago_cuotas_miembros_polo',
+          delimiter: ',',
+          headers: ["registro","id_cooperativa", "nro. comprobante", "banco", "fecha de pago", "monto pagado", "motivo del pago"]
+        };
+        console.log(dataToConvert)
+        csvDownload(dataToConvert);
         alert("reporte generado en archivo .csv, y descargado correctamente")
          } )
-    .catch(error => console.error('Error en el proceso:', error));
-
-    csvDownload(dataToConvert);
-  };
-
-  const dataToConvert = {
-    data: datas,
-    filename: 'reporte_pago_cuotas_miembros_polo',
-    delimiter: ',',
-    headers: ['id_listado', "id_cooperativa", "nro. comprobante", "banco", "fecha de pago", "monto pagado", "motivo del pago"]
+    .catch(error => {
+        console.error('Error en el proceso:', error)
+        alert("error en la descarga. Reporte no generado")  });
   };
 
   return (

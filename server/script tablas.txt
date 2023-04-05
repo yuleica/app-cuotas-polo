@@ -46,13 +46,4 @@ CREATE TABLE `registroCuotas`.`cuotass`(
 
 ********************************
 
-*********************************
-                <input 
-                  className="inputs" 
-                  type = "text" 
-                  name="descripcion_pago" 
-                  placeholder="Cuéntanos ¿qué estás pagando? "
-                  data-validate="Por Favor ingresa el motivo de tu pago" 
-                  value={descripcion}
-                  onChange={handleChange}/>
   
