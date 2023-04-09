@@ -3,8 +3,14 @@ const mysql = require('mysql');
 const myconn = require('express-myconnection');
 const cors = require('cors');
 
+
 const app = express();
 const rutas = require('../server/routes');
+
+//configuraciones
+
+    require('dotenv').config({path: './.env'})
+
 
 //configuración del puerto salida
 app.set('port', process.env.PORT || 9000);
@@ -12,24 +18,20 @@ app.listen(app.get('port'), () => {
     console.log('server is running on port', app.get('port'));
 });
 
+const baseDatos= process.env.DATABASE;
+const contraseña = process.env.DB_PASSWORD;
+const usuarioDB = process.env.DB_USER;
+const puertoDB = process.env.DB_PORT;
+
+
 //configuración BD
 const dbOptions = {
     host: 'localhost',
-    port: '3306',
-    user: 'sqluser',
-    password: '123456',
-    database: 'registroCuotas'
+    port: puertoDB,
+    user: usuarioDB,
+    password: contraseña,
+    database: baseDatos
 };
-
-/*const dbOptions = {
-    host: 'localhost',
-    port: '3306',
-    user: 'admin_cuotas',
-    password: '123456ac',
-    database: 'registroCuotas'
-
-   // rehacer la creación de usuario
-};*/
 
 //middleware
 app.use(myconn(mysql, dbOptions, 'single') );

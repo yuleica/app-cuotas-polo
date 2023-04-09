@@ -46,4 +46,12 @@ CREATE TABLE `registroCuotas`.`cuotass`(
 
 ********************************
 
-  
+  /*const dbOptions = {
+    host: 'localhost',
+    port: '3306',
+    user: 'admin_cuotas',
+    password: '123456ac',
+    database: 'registroCuotas'
+
+   // rehacer la creación de usuario
+};*/
